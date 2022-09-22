@@ -16,42 +16,44 @@ var rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
 
-const students = ['Jimmy', 'Timothy', 'Jimothy']
+const movies = ['Shrek', 'The Bee Movie', 'The Exorcist']
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'))
 })
 
-app.get('/api/students', (req, res) => {
-    res.status(200).send(students)
+app.get('/api/movies', (req, res) => {
+    res.status(200).send(movies)
 })
 
-app.post('/api/students', (req, res) => {
+app.post('/api/movies', (req, res) => {
    let {name} = req.body
 
-   const index = students.findIndex(student => {
-       return student === name
+   const index = movies.findIndex(movie => {
+       return movie === name
    })
 
    try {
        if (index === -1 && name !== '') {
-           students.push(name)
-           res.status(200).send(students)
+           movies.push(name)
+           rollbar.log('Movie was added successfully')
+           res.status(200).send(movies)
        } else if (name === ''){
-           res.status(400).send('You must enter a name.')
+            rollbar.error('No movie was provided')
+           res.status(400).send('You must enter a movie.')
        } else {
-           res.status(400).send('That student already exists.')
+           res.status(400).send('That movie already exists.')
        }
    } catch (err) {
        console.log(err)
    }
 })
 
-app.delete('/api/students/:index', (req, res) => {
+app.delete('/api/movies/:index', (req, res) => {
     const targetIndex = +req.params.index
     
-    students.splice(targetIndex, 1)
-    res.status(200).send(students)
+    movies.splice(targetIndex, 1)
+    res.status(200).send(movies)
 })
 
 const port = process.env.PORT || 4949

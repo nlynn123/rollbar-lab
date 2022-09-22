@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student List</title>
+    <title>Movie List</title>
 </head>
 
 <body>
-    <h1>Student List</h1>
+    <h1>Movie List</h1>
     <form>
-        <input type='text' placeholder='type a student name here...' />
-        <button>add student</button>
+        <input type='text' placeholder='type a movie name here...' />
+        <button>add movie</button>
     </form>
     <section></section>
 
@@ -26,8 +26,8 @@
             container.innerHTML = ''
             nameInput.value = ''
 
-            res.data.forEach((studentName, index) => {
-                container.innerHTML += `<p name=${index}>${studentName}</p>`
+            res.data.forEach((movieName, index) => {
+                container.innerHTML += `<p name=${index}>${movieName}</p>`
             })
 
             document.querySelectorAll('p').forEach(element => {
@@ -35,7 +35,7 @@
 
                 element.addEventListener('click', () => {
                     axios
-                        .delete(`/api/students/${theIndexValue}`)
+                        .delete(`/api/movies/${theIndexValue}`)
                         .then(res => {
                             putTheThingInTheView(res)
                         })
@@ -47,7 +47,7 @@
             evt.preventDefault();
 
             axios
-                .post('/api/students', { name: nameInput.value })
+                .post('/api/movies', { name: nameInput.value })
                 .then(res => {
                     putTheThingInTheView(res)
                 })
@@ -69,7 +69,7 @@
 
         // get student list on initial load
         axios
-            .get('/api/students')
+            .get('/api/movies')
             .then(res => {
                 putTheThingInTheView(res)
             })
