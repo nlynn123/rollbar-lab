@@ -43,6 +43,7 @@ app.post('/api/movies', (req, res) => {
            res.status(400).send('You must enter a movie.')
        } else {
            res.status(400).send('That movie already exists.')
+           rollbar.warning('That movie exists.')
        }
    } catch (err) {
        console.log(err)
