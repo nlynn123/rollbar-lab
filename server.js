@@ -54,6 +54,6 @@ app.delete('/api/students/:index', (req, res) => {
     res.status(200).send(students)
 })
 
-const port = process.env.PORT || 5050
+const port = process.env.PORT || 4949
 
 app.listen(port, () => console.log(`Server listening on ${port}`))
